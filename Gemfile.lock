@@ -102,6 +102,7 @@ GEM
     nio4r (2.3.1)
     nokogiri (1.10.1)
       mini_portile2 (~> 2.4.0)
+    pg (1.1.4)
     popper_js (1.14.5)
     public_suffix (3.0.3)
     puma (3.12.0)
@@ -205,6 +206,7 @@ DEPENDENCIES
   jquery-rails
   listen (>= 3.0.5, < 3.2)
   local_time
+  pg
   puma (~> 3.7)
   rails (~> 5.1.6, >= 5.1.6.1)
   rails-assets-jquery-hoverintent!
