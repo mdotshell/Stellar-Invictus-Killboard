@@ -15,13 +15,13 @@ class KillboardController < ApplicationController
                  
     @wall_of_shame = Kill.select("full_name, count(full_name) AS count, avatar, identifier")
                          .where(created_at: (Time.now - 7.days)..Time.now)
-                         .group(:full_name)
+                         .group("full_name, kills.avatar, kills.identifier")
                          .order('count DESC')
                          .first(10)
                     
     @top_killers = Kill.select("killers, count(killers) AS count, avatar, identifier")
                        .where(created_at: (Time.now - 7.days)..Time.now)
-                       .group(:killers)
+                       .group("killers, kills.avatar, kills.identifier")
                        .order('count DESC')
                        .first(10)
   end
