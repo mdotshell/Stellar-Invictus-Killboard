@@ -1,24 +1,5 @@
-# README
+# Stellar Invictus Killboard
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+An extension to the great game [Stellar Invictus](https://stellar-invictus.com).
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Written in Ruby on Rails, it adds a board to track both player death and losses. 
