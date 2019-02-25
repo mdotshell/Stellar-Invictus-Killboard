@@ -1,0 +1,27 @@
+<tr>
+  <td class="mobile-display-none"><%= local_time(last_kill.created_at,"%H:%M") %><br><span class="text-primary"><%= get_total_value_of_kill(last_kill) %>&nbsp;Cr</span></td>
+  <td class="text-center">
+    <a href="/kill/<%= last_kill.id %>">
+      <div class="space-img-back-kill">
+        <img src="https://s3-eu-west-1.amazonaws.com/static.stellar-invictus.com/assets/ships/<%= last_kill.ship_name.downcase %>.png">
+      </div>
+    </a>
+  </td>
+  <td>
+    <%= last_kill.site_name %><br>
+    <span class="color-sec-<%= Kill.systems[last_kill.system_name] %>"><%= last_kill.system_name %></span>
+  </td>
+  <td>
+    <img src="https://s3-eu-west-1.amazonaws.com/static.stellar-invictus.com/assets/avatars/<%= last_kill.avatar %>.jpg", class="avatar-img mobile-display-none">
+    <a href="/user/<%= last_kill.identifier %>"><%= last_kill.full_name %></a> (<%= last_kill.ship_name %>)<br>
+    <%= last_kill.corporation ? last_kill.corporation['name'] : "<span class=\"text-muted\">No Corp</span>".html_safe %>
+  </td>
+  <td>
+    <% if last_kill.killers[0] == "npc" %>
+      <img src="https://s3-eu-west-1.amazonaws.com/static.stellar-invictus.com/assets/avatars/Outlaw.jpg", class="avatar-img mobile-display-none">
+    <% else %>
+      <img src="https://s3-eu-west-1.amazonaws.com/static.stellar-invictus.com/assets/avatars/<%= last_kill.killers[0]['avatar'] %>.jpg", class="avatar-img">
+    <% end %>
+    <%= last_kill.killers[0] == "npc" ? name = "Outlaw<br><span class=\"text-muted\">No Corp</span>".html_safe : "#{last_kill.killers[0]['name']}<br>#{last_kill.killers[0]['corporation']['name'] rescue 'None'}".html_safe %>
+  </td>
+</tr>

@@ -1,0 +1,86 @@
+// Place all the styles related to the killboard controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+// Helpers
+.bg-black { background-color: black !important; }
+.w-1px { width: 1px !important }
+.bg-darkgreen { background-color: #253800 !important; }
+.bg-darkred { background-color: #380300 !important; }
+.color-sec-high, .color-action-deposit { color: rgba(81, 203, 238, 1) !important; }
+.color-sec-medium, .color-action-withdraw { color: orange !important; }
+.color-sec-low { color: red !important; }
+
+@media (max-width: 767px) {
+  .mobile-display-none { display: none !important; } 
+}
+
+// Body
+body {
+  background-image: image-url('background.jpg');
+}
+
+.main-container {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+.yield-field {
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+}
+
+// ###############
+// Navbar
+// ###############
+.navbar-dark {
+  border-left: 0 !important;
+  border-right: 0 !important;
+}
+
+// ###############
+// Killfeed
+// ###############
+.killfeed {
+  img { 
+    height: 40px;
+  }
+  .avatar-img {
+    float: left;
+    border-radius: 5px;
+    margin-right: 10px;
+    border: 1px solid grey;
+  }
+  .space-img-back-kill {
+    width: 40px;
+    height: 40px;
+    border: 1px solid grey;
+    border-radius: 5px;
+    background-image: image-url('background.jpg');
+    img {
+      margin-top: 2.5px;
+      height: 35px !important;
+    }
+  }
+}
+
+// Show
+.kill-feed-show {
+  .avatar-img {
+    float: left;
+    border-radius: 5px;
+    margin-right: 10px;
+    border: 1px solid grey;
+  }
+  .space-img-back-kill {
+    margin-right: 10px;
+    width: 50px;
+    height: 50px;
+    border: 1px solid grey;
+    border-radius: 5px;
+    background-image: image-url('background.jpg');
+    img {
+        margin-top: 2.5px;
+        height: 45px !important;
+    }
+  }
+}

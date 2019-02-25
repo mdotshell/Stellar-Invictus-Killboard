@@ -1,0 +1,137 @@
+<div class="mt-3 kill-feed-show mb-3">
+  <div class="row">
+    <div class="col-md-9">
+      <h5 class="mt-3">Victim</h5>
+        
+      <table class="table table-striped">
+        <tbody>
+          <tr>
+            <td>
+              <img src = "https://s3-eu-west-1.amazonaws.com/static.stellar-invictus.com/assets/avatars/<%= @kill.avatar %>.jpg" style="width:50px" class="float-left ml-50px avatar-img"></img>
+              <div class="space-img-back-kill float-left text-center">
+                <img src = "https://s3-eu-west-1.amazonaws.com/static.stellar-invictus.com/assets/ships/<%= @kill.ship_name.downcase %>.png"></img>
+              </div>
+              <a href="/user/<%= @kill.identifier %>"><%= @kill.full_name %></a><br>
+              <%= @kill.corporation ? "<a href='/corporation/#{@kill.corporation['id']}'>#{@kill.corporation['name']}</a>".html_safe : "<span class=\"text-muted\">No Corp</span>".html_safe %>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <th>Time:</th>
+            <td><%= local_time(@kill.created_at,"%m/%d/%Y %H:%M") %></td>
+          </tr>
+          <tr>
+            <th>Bounty at Death:</th>
+            <td><%= @kill.bounty %> Cr</td>
+          </tr>
+          <tr>
+            <th>Destroyed Ship:</th>
+            <td><%= @kill.ship_name %></td>
+          </tr>
+          <tr>
+            <th>System:</th>
+            <td><a href="/system/<%= @kill.system_name %>" class="color-sec-<%= Kill.systems[@kill.system_name] rescue '' %>"><%= @kill.system_name %></a></td>
+          </tr>
+          <tr>
+            <th>Location:</th>
+            <td><%= @kill.site_name %></td>
+          </tr>
+          <tr>
+            <th>Total Value:</th>
+            <td><%= get_total_value_of_kill(@kill) %> Cr</td>
+          </tr>
+          <tr class="text-success">
+            <th>Total Dropped:</th>
+            <td><%= get_dropped_value_of_kill(@kill) %> Cr</td>
+          </tr>
+          <tr class="text-danger">
+            <th>Total Destroyed:</th>
+            <td><%= get_destroyed_value_of_kill(@kill) %> Cr</td>
+          </tr>
+        </tbody>
+      </table>
+        
+      <h5 class="mt-5">Items</h5>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th class="mobile-display-none">Equipped</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if @kill.loot %>
+            <% @kill.loot.each do |l| %>
+              <tr class="<%= 'bg-darkgreen' if l['dropped'] %>">
+                <td><%= l['name'] %></td>
+                <td><%= l['amount'] %></td>
+                <td class="mobile-display-none"><%= l['equipped'] ? 'Yes' : 'No' %></td>
+                <td><%= (Kill.items[l['name']]['price'] rescue 0) * l['amount'].to_i %> Cr</td>
+              </tr>
+            <% end %>
+          <% end %>
+          <tr>
+            <td><%= @kill.ship_name %></td>
+            <td>1</td>
+            <td class="mobile-display-none">-</td>
+            <td><%= Kill.spaceships[@kill.ship_name]['price'] %> Cr</td>
+          </tr>
+            
+          <tr>
+            <th>Total Value:</th>
+            <td></td>
+            <td class="mobile-display-none"></td>
+            <td><%= get_total_value_of_kill(@kill) %> Cr</td>
+          </tr>
+          <tr class="text-success">
+            <th>Total Dropped:</th>
+            <td></td>
+            <td class="mobile-display-none"></td>
+            <td><%= get_dropped_value_of_kill(@kill) %> Cr</td>
+          </tr>
+          <tr class="text-danger">
+            <th>Total Destroyed:</th>
+            <td></td>
+            <td class="mobile-display-none"></td>
+            <td><%= get_destroyed_value_of_kill(@kill) %> Cr</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-3">
+      <h5 class="mt-3">Attacker(s)</h5>
+        
+      <table class="table table-striped">
+        <tbody>
+          <% if @kill.killers == ["npc"] %>
+            <tr>
+              <td>
+                <img src = "https://s3-eu-west-1.amazonaws.com/static.stellar-invictus.com/assets/avatars/Outlaw.jpg" style="width:50px" class="float-left avatar-img"></img>
+                <div class="space-img-back-kill float-left text-center">
+                  <img src = "https://s3-eu-west-1.amazonaws.com/static.stellar-invictus.com/assets/ships/enemy.png"></img>
+                </div>
+                <span>Outlaw</span><br>
+                <span class="text-muted">No Corp</span>
+              </td>
+            </tr>
+          <% else %>
+            <% @kill.killers.each do |k| %>
+              <tr>
+                <td>
+                  <img src = "https://s3-eu-west-1.amazonaws.com/static.stellar-invictus.com/assets/avatars/<%= k['avatar'] %>.jpg" style="width:50px" class="float-left avatar-img"></img>
+                  <div class="space-img-back-kill float-left text-center">
+                    <img src = "https://s3-eu-west-1.amazonaws.com/static.stellar-invictus.com/assets/ships/<%= k['ship_name'].downcase %>.png"></img>
+                  </div>
+                  <a href="/user/<%= k['identifier'] %>"><%= k['name'] %></a><br>
+                  <%= k['corporation']['name'] rescue "<span class=\"text-muted\">No Corp</span>".html_safe %>
+                </td>
+              </tr>
+            <% end %>
+          <% end%>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
