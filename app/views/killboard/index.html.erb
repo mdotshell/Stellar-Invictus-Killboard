@@ -36,9 +36,19 @@
                 <% if f.killers[0] == "npc" %>
                   <img src="https://s3-eu-west-1.amazonaws.com/static.stellar-invictus.com/assets/avatars/Outlaw.jpg", class="avatar-img mobile-display-none">
                 <% else %>
-                  <img src="https://s3-eu-west-1.amazonaws.com/static.stellar-invictus.com/assets/avatars/<%= f.killers[0]['avatar'] %>.jpg", class="avatar-img">
+                  <img src="https://s3-eu-west-1.amazonaws.com/static.stellar-invictus.com/assets/avatars/<%= f.killers[0]['avatar'] %>.jpg", class="avatar-img mobile-display-none">
                 <% end %>
-                <%= f.killers[0] == "npc" ? name = "Outlaw<br><span class=\"text-muted\">No Corp</span>".html_safe : "#{f.killers[0]['name']}<br>#{f.killers[0]['corporation']['name'] rescue 'None'}".html_safe %>
+                <% if f.killers[0] == "npc" %>
+                  Outlaw<br>
+                  <span class="text-muted">No Corp</span>
+                <% else %>
+                  <a href="user/<%= f.killers[0]['id'] %>"><%= f.killers[0]['name'] %></a> (<%= f.killers[0]['ship_name'] %>)<br>
+                  <% if f.killers[0]['corporation'] %>
+                    <a href="/corporation/<%= f.killers[0]['corporation']['id'] %>"><%= f.killers[0]['corporation']['name'] %></a>
+                  <% else %>
+                    <span class="text-muted">No Corp</span>
+                  <% end %>
+                <% end %>
               </td>
             </tr>
           <% end %>

@@ -124,8 +124,12 @@
                   <div class="space-img-back-kill float-left text-center">
                     <img src = "https://s3-eu-west-1.amazonaws.com/static.stellar-invictus.com/assets/ships/<%= k['ship_name'].downcase %>.png"></img>
                   </div>
-                  <a href="/user/<%= k['identifier'] %>"><%= k['name'] %></a><br>
-                  <%= k['corporation']['name'] rescue "<span class=\"text-muted\">No Corp</span>".html_safe %>
+                  <a href="/user/<%= k['id'] %>"><%= k['name'] %></a><br>
+                  <% if k['corporation'] %>
+                    <a href="/corporation/<%= k['corporation']['id'] %>"><%= k['corporation']['name'] %></a>
+                  <% else %>
+                    <span class="text-muted">No Corp</span>
+                  <% end %>
                 </td>
               </tr>
             <% end %>
