@@ -55,7 +55,8 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-
+gem 'ruby-prof'
+gem 'rails-perftest'
 gem 'jquery-rails'
 gem 'local_time'
 gem 'redis'

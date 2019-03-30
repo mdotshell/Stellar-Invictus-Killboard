@@ -17,7 +17,7 @@
 
 // Body
 body {
-  background-image: image-url('background.jpg');
+  background-image: url('https://s3.amazonaws.com/mdotshell/SIKB_Assets/stellar-killboard-background.jpg');
 }
 
 .main-container {
@@ -55,7 +55,7 @@ body {
     height: 40px;
     border: 1px solid grey;
     border-radius: 5px;
-    background-image: image-url('background.jpg');
+    background-image: url('https://s3.amazonaws.com/mdotshell/SIKB_Assets/stellar-killboard-background.jpg');
     img {
       margin-top: 2.5px;
       height: 35px !important;
@@ -77,7 +77,7 @@ body {
     height: 50px;
     border: 1px solid grey;
     border-radius: 5px;
-    background-image: image-url('background.jpg');
+    background-image: url('https://s3.amazonaws.com/mdotshell/SIKB_Assets/stellar-killboard-background.jpg');
     img {
         margin-top: 2.5px;
         height: 45px !important;

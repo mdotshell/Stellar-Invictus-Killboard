@@ -2,19 +2,22 @@ class Kill < ApplicationRecord
   serialize :killers
   serialize :loot
   serialize :corporation
-  
+  @items = YAML.load_file("#{Rails.root.to_s}/config/variables/items.yml")
+  @spaceships = YAML.load_file("#{Rails.root.to_s}/config/variables/spaceships.yml")
+  @systems = YAML.load_file("#{Rails.root.to_s}/config/variables/systems.yml")
+
   def self.items
-    YAML.load_file("#{Rails.root.to_s}/config/variables/items.yml")
+    @items
   end
-  
+
   def self.spaceships
-    YAML.load_file("#{Rails.root.to_s}/config/variables/spaceships.yml")
+    @spaceships
   end
-  
+
   def self.systems
-    YAML.load_file("#{Rails.root.to_s}/config/variables/systems.yml")
+    @systems
   end
-  
+
   after_create_commit do
     ActionCable.server.broadcast 'kill_notifications_channel', message: ApplicationController.renderer.render(partial: 'killboard/feed', locals: { last_kill: self })
   end

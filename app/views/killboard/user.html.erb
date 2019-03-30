@@ -14,7 +14,7 @@
         <tbody class="killfeed">
           <% @kills.each do |f| %>
            <tr class="<%= f.identifier == @id.to_i ? 'bg-darkred' : 'bg-darkgreen' %>">
-              <td class="mobile-display-none"><%= local_time(f.created_at,"%H:%M") %><br><span class="text-primary"><%= get_total_value_of_kill(f) %>&nbsp;Cr</span></td>
+              <td class="mobile-display-none"><%= local_time(f.created_at,"%H:%M") %><br><%= get_total_value_of_kill(f) %>&nbsp;Cr</span></td>
               <td class="text-center">
                 <a href="/kill/<%= f.id %>">
                   <div class="space-img-back-kill">
@@ -41,7 +41,7 @@
                   Outlaw<br>
                   <span class="text-muted">No Corp</span>
                 <% else %>
-                  <a href="user/<%= f.killers[0]['id'] %>"><%= f.killers[0]['name'] %></a> (<%= f.killers[0]['ship_name'] %>)<br>
+                  <a href="/user/<%= f.killers[0]['id'] %>"><%= f.killers[0]['name'] %></a> (<%= f.killers[0]['ship_name'] %>)<br>
                   <% if f.killers[0]['corporation'] %>
                     <a href="/corporation/<%= f.killers[0]['corporation']['id'] %>"><%= f.killers[0]['corporation']['name'] %></a>
                   <% else %>

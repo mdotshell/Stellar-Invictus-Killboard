@@ -4,13 +4,14 @@ class KillboardController < ApplicationController
   
   def index
     if params[:search]
-      @kills = Kill.where("full_name LIKE ?", "%#{params[:search]}%").where(created_at: (Time.now - 30.days)..Time.now)
+      @upcase = params[:search].split.map(&:capitalize).join(' ')
+      @kills = Kill.where("full_name LIKE ?", "%#{@upcase}%")
                    .order('created_at DESC')
                    .first(50)
     else
-      @kills = Kill.where(created_at: (Time.now - 1.days)..Time.now)
+      @kills = Kill.all #.where(created_at: (Time.now - 1.days)..Time.now)
                    .order('created_at DESC')
-                   .first(50) 
+                   .first(20)
     end
                  
     @wall_of_shame = Kill.select("full_name, count(full_name) AS count, avatar, identifier")
@@ -18,18 +19,24 @@ class KillboardController < ApplicationController
                          .group("full_name, kills.avatar, kills.identifier")
                          .order('count DESC')
                          .first(10)
-                    
-    @top_killers = Kill.select("killers, count(killers) AS count, avatar, identifier")
-                       .where(created_at: (Time.now - 7.days)..Time.now)
-                       .group("killers, kills.avatar, kills.identifier")
-                       .order('count DESC')
-                       .first(10)
+
+    killers = Kill.select("killers")
+    top_killers = []
+    killers.each do |t|
+      if t.killers[0] != "npc"
+        k = { :id => t.killers[0]['id'], :name => t.killers[0]['name'] }
+        top_killers.push(k)
+      end
+    end
+    
+    @top_killers = Hash.new 0
+    top_killers.each do |x|
+      @top_killers[x] += 1
+    end
+    @top_killers = @top_killers.sort_by{|k,v| v }.reverse[0..9]
   end
 
   def create 
-    @allowed_ips = ["168.30.200.214","54.229.252.32","209.50.61.92", "127.0.0.1","75.91.105.88"]
-    if @allowed_ips.include?(request.remote_ip)
-      # Weird params stuff
       kill_params[:identifier] = kill_params[:id]
       
       # Safety check because some kills come in multiple times
@@ -41,9 +48,6 @@ class KillboardController < ApplicationController
       else
         render plain: "Failed to add new record. Errors: #{@kill.errors.full_messages}\n"
       end
-    else
-      render plain: "Forbidden\n"
-    end
   end
   
   def show
@@ -61,7 +65,7 @@ class KillboardController < ApplicationController
   def system
     if params[:name]
       @kills = Kill.where(system_name: params[:name]).order('created_at DESC').first(30)
-    end  
+    end
   end
 
   def corporation

@@ -66,11 +66,10 @@
         </tr>
       </thead>
       <tbody>
-        <% @top_killers.each do |t| %>
-          <% next if t.killers[0] == "npc" %>
+        <% @top_killers.each do |t,v| %>
           <tr>
-            <td><a href="/user/<%= t.killers[0]['id'] %>"><%= t.killers[0]['name'] %></a></td>
-            <td><%= t.count %></td>
+            <td><a href="/user/<%= t[:id] %>"><%= t[:name] %></a></td>
+            <td><%= v %></td>
           </tr>
         <% end %>
       </tbody>
